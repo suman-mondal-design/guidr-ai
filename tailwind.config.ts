@@ -22,6 +22,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           light: "hsl(var(--primary-light))",
+          dark: "hsl(var(--primary-dark))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -43,7 +44,17 @@ export default {
         },
         success: {
           DEFAULT: "hsl(var(--success))",
+          light: "hsl(var(--success-light))",
           foreground: "hsl(var(--success-foreground))",
+        },
+        // Indian Tricolor
+        saffron: {
+          DEFAULT: "hsl(var(--saffron))",
+          light: "hsl(var(--saffron-light))",
+        },
+        green: {
+          DEFAULT: "hsl(var(--green))",
+          light: "hsl(var(--green-light))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -66,18 +77,22 @@ export default {
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
+        'gradient-tricolor': 'var(--gradient-tricolor)',
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-card': 'var(--gradient-card)',
+        'gradient-government': 'var(--gradient-government)',
       },
       boxShadow: {
         'custom-sm': 'var(--shadow-sm)',
         'custom-md': 'var(--shadow-md)',
         'custom-lg': 'var(--shadow-lg)',
         'glow': 'var(--shadow-glow)',
+        'official': 'var(--shadow-official)',
       },
       transitionTimingFunction: {
         'smooth': 'var(--transition-smooth)',
         'bounce': 'var(--transition-bounce)',
+        'elegant': 'var(--transition-elegant)',
       },
       borderRadius: {
         lg: "var(--radius)",

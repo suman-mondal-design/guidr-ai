@@ -15,7 +15,10 @@ import {
   GraduationCap,
   MapPin,
   Briefcase,
-  Heart
+  Heart,
+  Shield,
+  CheckCircle,
+  Globe
 } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
 import { LanguageToggle } from './LanguageToggle';
@@ -91,75 +94,101 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onBack, onSubmit }) =>
   const isComplete = profileData.education && profileData.skills.length > 0 && profileData.interests.length > 0 && profileData.location;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-accent/10">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <Button 
-          variant="outline" 
-          onClick={onBack}
-          className="gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </Button>
-        <LanguageToggle />
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
+      {/* Official Header */}
+      <header className="bg-white border-b-4 border-saffron shadow-official">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <Button 
+              variant="outline" 
+              onClick={onBack}
+              className="gap-2 border-2 hover:border-primary"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </Button>
+            
+            <div className="flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-green/10 text-green rounded-full text-sm">
+                <Globe className="h-4 w-4" />
+                <span>भारत सरकार</span>
+              </div>
+              <LanguageToggle />
+            </div>
+          </div>
+        </div>
       </header>
 
-      {/* Form */}
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            {t('profile.title')}
+      {/* Form Content */}
+      <main className="container mx-auto px-4 py-12 max-w-4xl">
+        {/* Progress Header */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <Shield className="h-6 w-6 text-success" />
+            <span className="text-success font-medium">Secure Government Portal</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <span className="bg-gradient-government bg-clip-text text-transparent">
+              {t('profile.title')}
+            </span>
           </h1>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             {t('profile.subtitle')}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-10">
           {/* Education Level */}
-          <Card className="p-6 shadow-custom-md border-0 bg-gradient-card">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <GraduationCap className="h-5 w-5 text-primary-foreground" />
+          <Card className="p-8 shadow-official border-2 border-border hover:border-saffron/30 bg-gradient-card transition-all duration-300">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 bg-gradient-government rounded-2xl flex items-center justify-center shadow-custom-md">
+                <GraduationCap className="h-7 w-7 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground">{t('profile.education')}</h3>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">{t('profile.education')}</h3>
+                <p className="text-muted-foreground">Select your highest qualification</p>
+              </div>
             </div>
             <Select
               value={profileData.education}
               onValueChange={(value) => setProfileData(prev => ({ ...prev, education: value }))}
             >
-              <SelectTrigger className="w-full h-12 bg-background border-border">
+              <SelectTrigger className="w-full h-14 bg-background border-2 border-border hover:border-primary text-lg">
                 <SelectValue placeholder={t('profile.education.placeholder')} />
               </SelectTrigger>
-              <SelectContent className="bg-card border-border shadow-custom-md">
+              <SelectContent className="bg-card border-2 border-border shadow-official">
                 {educationOptions.map(option => (
-                  <SelectItem key={option} value={option}>{option}</SelectItem>
+                  <SelectItem key={option} value={option} className="text-lg py-3">{option}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </Card>
 
           {/* Skills */}
-          <Card className="p-6 shadow-custom-md border-0 bg-gradient-card">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Briefcase className="h-5 w-5 text-primary-foreground" />
+          <Card className="p-8 shadow-official border-2 border-border hover:border-saffron/30 bg-gradient-card transition-all duration-300">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 bg-gradient-government rounded-2xl flex items-center justify-center shadow-custom-md">
+                <Briefcase className="h-7 w-7 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground">{t('profile.skills')}</h3>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">{t('profile.skills')}</h3>
+                <p className="text-muted-foreground">Choose all skills that apply to you</p>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {skillOptions.map(skill => (
                 <Badge
                   key={skill}
                   variant={profileData.skills.includes(skill) ? "default" : "outline"}
-                  className={`cursor-pointer transition-all duration-200 ${
+                  className={`cursor-pointer transition-all duration-200 text-sm py-2 px-4 ${
                     profileData.skills.includes(skill) 
-                      ? 'bg-gradient-primary text-primary-foreground shadow-custom-sm' 
-                      : 'hover:bg-secondary border-border'
+                      ? 'bg-gradient-government text-white shadow-custom-sm hover:shadow-glow border-0' 
+                      : 'hover:bg-secondary border-2 border-border hover:border-primary'
                   }`}
                   onClick={() => handleSkillToggle(skill)}
                 >
+                  {profileData.skills.includes(skill) && <CheckCircle className="h-3 w-3 mr-1" />}
                   {skill}
                 </Badge>
               ))}
@@ -167,25 +196,29 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onBack, onSubmit }) =>
           </Card>
 
           {/* Interests */}
-          <Card className="p-6 shadow-custom-md border-0 bg-gradient-card">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Heart className="h-5 w-5 text-primary-foreground" />
+          <Card className="p-8 shadow-official border-2 border-border hover:border-saffron/30 bg-gradient-card transition-all duration-300">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 bg-gradient-government rounded-2xl flex items-center justify-center shadow-custom-md">
+                <Heart className="h-7 w-7 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground">{t('profile.interests')}</h3>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">{t('profile.interests')}</h3>
+                <p className="text-muted-foreground">Select sectors that interest you</p>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {interestOptions.map(interest => (
                 <Badge
                   key={interest}
                   variant={profileData.interests.includes(interest) ? "default" : "outline"}
-                  className={`cursor-pointer transition-all duration-200 ${
+                  className={`cursor-pointer transition-all duration-200 text-sm py-2 px-4 ${
                     profileData.interests.includes(interest) 
-                      ? 'bg-gradient-primary text-primary-foreground shadow-custom-sm' 
-                      : 'hover:bg-secondary border-border'
+                      ? 'bg-gradient-government text-white shadow-custom-sm hover:shadow-glow border-0' 
+                      : 'hover:bg-secondary border-2 border-border hover:border-primary'
                   }`}
                   onClick={() => handleInterestToggle(interest)}
                 >
+                  {profileData.interests.includes(interest) && <CheckCircle className="h-3 w-3 mr-1" />}
                   {interest}
                 </Badge>
               ))}
@@ -193,42 +226,53 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onBack, onSubmit }) =>
           </Card>
 
           {/* Location */}
-          <Card className="p-6 shadow-custom-md border-0 bg-gradient-card">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <MapPin className="h-5 w-5 text-primary-foreground" />
+          <Card className="p-8 shadow-official border-2 border-border hover:border-saffron/30 bg-gradient-card transition-all duration-300">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 bg-gradient-government rounded-2xl flex items-center justify-center shadow-custom-md">
+                <MapPin className="h-7 w-7 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground">{t('profile.location')}</h3>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">{t('profile.location')}</h3>
+                <p className="text-muted-foreground">Where would you like to work?</p>
+              </div>
             </div>
             <Select
               value={profileData.location}
               onValueChange={(value) => setProfileData(prev => ({ ...prev, location: value }))}
             >
-              <SelectTrigger className="w-full h-12 bg-background border-border">
+              <SelectTrigger className="w-full h-14 bg-background border-2 border-border hover:border-primary text-lg">
                 <SelectValue placeholder={t('profile.location.placeholder')} />
               </SelectTrigger>
-              <SelectContent className="bg-card border-border shadow-custom-md">
+              <SelectContent className="bg-card border-2 border-border shadow-official">
                 {locationOptions.map(option => (
-                  <SelectItem key={option} value={option}>{option}</SelectItem>
+                  <SelectItem key={option} value={option} className="text-lg py-3">{option}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </Card>
 
           {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={!isComplete}
-            size="lg"
-            className={`w-full py-6 text-lg rounded-xl transition-all duration-300 ${
-              isComplete 
-                ? 'bg-gradient-primary hover:scale-105 shadow-custom-lg hover:shadow-glow' 
-                : 'bg-muted text-muted-foreground cursor-not-allowed'
-            }`}
-          >
-            {t('profile.submit')}
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          <div className="text-center pt-8">
+            <Button
+              type="submit"
+              disabled={!isComplete}
+              size="lg"
+              className={`text-xl px-16 py-8 rounded-2xl font-bold transition-all duration-300 ${
+                isComplete 
+                  ? 'bg-gradient-government hover:scale-105 shadow-official hover:shadow-glow' 
+                  : 'bg-muted text-muted-foreground cursor-not-allowed'
+              }`}
+            >
+              {t('profile.submit')}
+              <ArrowRight className="ml-3 h-6 w-6" />
+            </Button>
+            
+            {!isComplete && (
+              <p className="text-muted-foreground mt-4 text-sm">
+                Please complete all sections to continue
+              </p>
+            )}
+          </div>
         </form>
       </main>
     </div>
