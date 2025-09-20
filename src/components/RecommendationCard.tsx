@@ -37,7 +37,8 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({ internsh
   const { t } = useLanguage();
 
   const handleApply = () => {
-    window.open(internship.apply_link, '_blank');
+    // Open the official PM Internship portal page
+    window.open(internship.apply_link, '_blank', 'noopener,noreferrer');
   };
 
   const getSectorIcon = (sector: string) => {
